@@ -1,0 +1,74 @@
+# Bandit security configuration for Python
+# https://bandit.readthedocs.io/en/latest/config.html
+
+[bandit]
+# Exclude common directories that don't need security scanning
+exclude_dirs = [
+    "./tests",
+    "./venv", 
+    "./env",
+    "./node_modules",
+    "./.git",
+    "./.tox",
+    "./.eggs",
+    "./build",
+    "./dist"
+]
+
+# Skip specific test IDs (uncomment and modify as needed)
+# skips = ['B101', 'B601']
+
+# Report confidence levels: LOW, MEDIUM, HIGH
+confidence = "MEDIUM"
+
+# Report severity levels: LOW, MEDIUM, HIGH  
+level = "MEDIUM"
+
+# Output format options: csv, custom, html, json, screen, txt, xml, yaml
+format = "screen"
+
+# List of plugin names to load
+plugins = []
+
+# Additional paths to include in scan
+include = ["*.py"]
+
+# Blacklisted function calls
+[bandit.blacklist_calls]
+# Example: bad_function_name = "Use secure_function_name instead"
+
+# Hardcoded password checks
+[bandit.hardcoded_password_string]
+# Additional words to check for passwords
+word_list = ["password", "pass", "passwd", "pwd", "secret", "token", "key"]
+
+# Shell injection checks  
+[bandit.shell_injection]
+# Subprocess calls to check
+subprocess = [
+    "subprocess.Popen",
+    "subprocess.call", 
+    "subprocess.check_call",
+    "subprocess.check_output",
+    "subprocess.run",
+    "os.system",
+    "os.popen"
+]
+
+# SQL injection checks
+[bandit.sql_injection]
+# SQL-related functions to check
+names = ["execute", "executemany", "cursor"]
+
+# Custom security rules (examples)
+[bandit.assert_used]
+# Check for assert statements in production code
+skips = []
+
+[bandit.exec_used] 
+# Check for exec() usage
+skips = []
+
+[bandit.hardcoded_bind_all_interfaces]
+# Check for binding to all network interfaces (0.0.0.0)
+skips = []
